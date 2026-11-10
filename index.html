@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=qr-modal-1">
+  <link rel="stylesheet" href="styles.css?v=qr-join-2">
 </head>
 <body>
   <header class="topbar"><a class="brand" href="./"><span class="brandmark">API</span><span>FIELD EXERCISE / 01</span></a><span class="live"><i></i> CLASE EN VIVO</span></header>
@@ -20,6 +20,14 @@
         <article class="entry-card player-card"><div class="card-kicker">PARA PARTICIPANTES</div><h2>Unirse a la clase</h2><p>Entra con el código que aparece en el proyector.</p><form id="joinForm"><label for="roomCode">Código de sala</label><input id="roomCode" name="roomCode" inputmode="numeric" maxlength="6" placeholder="000000" required><label for="playerName">Nombre o apodo</label><input id="playerName" name="playerName" maxlength="18" placeholder="Ej. Alex" required><button class="button secondary" type="submit">Entrar al juego <span>→</span></button></form></article>
       </div>
       <p class="config-note" id="configNote" hidden>Falta conectar Firebase para habilitar las salas en vivo. Consulta la guía de configuración del proyecto.</p>
+    </section>
+
+    <section class="screen quick-join" id="quickJoinScreen" hidden>
+      <div class="quick-code-label">CÓDIGO DE SALA</div>
+      <h1 id="quickRoomCode">······</h1>
+      <div class="quick-participants"><strong id="quickParticipantCount">0</strong><span>personas en la sala</span></div>
+      <form id="quickJoinForm" class="quick-join-form"><label for="quickPlayerName">Tu nombre o apodo</label><input id="quickPlayerName" maxlength="18" placeholder="Escribe tu nombre" required><button class="button primary" type="submit">Unirme a la partida <span>→</span></button></form>
+      <p class="quick-status" id="quickJoinStatus" aria-live="polite">Conectando con la sala…</p>
     </section>
 
     <section class="screen host-screen" id="hostScreen" hidden>
@@ -41,6 +49,6 @@
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
   </main>
   <dialog class="qr-modal" id="qrModal" aria-labelledby="qrModalTitle"><button class="qr-close" id="closeQrModal" type="button" aria-label="Cerrar QR">×</button><div class="qr-modal-content"><div class="eyebrow">PARTIDA EN VIVO</div><h2 id="qrModalTitle">Escanea para unirte</h2><canvas id="largeRoomQr" width="440" height="440" aria-label="Código QR grande para unirse a la sala"></canvas><strong class="qr-modal-code" id="largeRoomCode"></strong><p>Abre la cámara de tu teléfono y escanea el código.</p></div></dialog>
-  <script type="module" src="app.js?v=qr-modal-1"></script>
+  <script type="module" src="app.js?v=qr-join-2"></script>
 </body>
 </html>
