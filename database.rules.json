@@ -1,0 +1,24 @@
+{
+  "rules": {
+    "rooms": {
+      "$room": {
+        ".read": "auth != null",
+        ".write": "auth != null && ((!data.exists() && newData.child('hostUid').val() === auth.uid) || (data.exists() && data.child('hostUid').val() === auth.uid))",
+        "players": {
+          "$uid": {
+            ".write": "auth != null && auth.uid === $uid && root.child('rooms').child($room).child('phase').val() === 'lobby'",
+            ".validate": "newData.hasChildren(['name', 'joinedAt']) && newData.child('name').isString() && newData.child('name').val().length <= 18 && newData.child('joinedAt').isNumber()"
+          }
+        },
+        "votes": {
+          "$round": {
+            "$uid": {
+              ".write": "auth != null && auth.uid === $uid && root.child('rooms').child($room).child('players').child($uid).exists() && root.child('rooms').child($room).child('phase').val() === 'voting' && !data.exists()",
+              ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 2"
+            }
+          }
+        }
+      }
+    }
+  }
+}

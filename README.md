@@ -1,16 +1,22 @@
 # API bajo presión
 
-An interactive, Spanish-language classroom simulation about API attack surfaces and defense in depth.
+A Spanish-language, room-based classroom minigame about API attack surfaces and defense in depth. Students join from their phones; the host view displays votes live.
+
+## Firebase setup
+
+The game uses Firebase Authentication with anonymous sign-in and Realtime Database. It is configured for project `presentacion-d0a1f`; the client configuration is in `firebase-config.js`, and database rules are in `database.rules.json`.
+
+The browser config is public by design. The database rules restrict room updates to the host and allow joined players to submit one vote per round. Do not switch the database to public read/write test rules.
 
 ## Run locally
 
-Open `index.html` in a browser, or serve this directory with:
+Serve over HTTP because the Firebase SDK uses JavaScript modules:
 
 ```sh
 python3 -m http.server 8000
 ```
 
-Then visit `http://localhost:8000`.
+Open `http://localhost:8000`. Firebase must be configured for multiplayer rooms to work.
 
 ## Deploy
 
