@@ -38,5 +38,8 @@ async function copyJoin(){const joinUrl=new URL(location.href);joinUrl.search=`?
 function routeFromUrl(){const params=new URLSearchParams(location.search);if(params.has("room"))$("roomCode").value=params.get("room").slice(0,6);if(params.has("host")){roomCode=params.get("host").slice(0,6);hostMode=true;ensureUser().then(()=>get(roomRef()).then(snapshot=>{if(snapshot.exists()&&snapshot.val().hostUid===user.uid){roomData=snapshot.val();startHost()}else toast("Esta sala de proyección ya no está disponible.")})).catch(()=>toast("No se pudo volver a conectar con la sala."))}}
 
 if(validConfig){app=initializeApp(firebaseConfig);auth=getAuth(app);db=getDatabase(app);$("createRoom").addEventListener("click",createRoom);$("joinForm").addEventListener("submit",joinRoom);$("hostAction").addEventListener("click",hostAction);$("endGame").addEventListener("click",endGame);$("copyJoin").addEventListener("click",copyJoin);routeFromUrl()}else setConfigState();
-$("toggleQr").addEventListener("click",toggleQrSize);
-function toggleQrSize(){const strip=document.querySelector(".join-strip");const expanded=strip.classList.toggle("qr-expanded");const button=$("toggleQr");button.textContent=expanded?"Reducir QR":"Ampliar QR";button.setAttribute("aria-expanded",String(expanded));const joinUrl=new URL(location.href);joinUrl.search=`?room=${roomCode}`;QRCode.toCanvas($("roomQr"),joinUrl.toString(),{width:expanded?260:150,margin:1,color:{dark:"#101a20",light:"#ffffff"}}).catch(()=>{})}
+$("toggleQr").addEventListener("click",openQrModal);
+$("closeQrModal").addEventListener("click",closeQrModal);
+$("qrModal").addEventListener("click",event=>{if(event.target===$("qrModal"))$("qrModal").close()});
+function closeQrModal(){$("qrModal").close()}
+async function openQrModal(){const joinUrl=new URL(location.href);joinUrl.search=`?room=${roomCode}`;$("largeRoomCode").textContent=roomCode;try{await QRCode.toCanvas($("largeRoomQr"),joinUrl.toString(),{width:440,margin:1,color:{dark:"#101a20",light:"#ffffff"}});$("qrModal").showModal()}catch{toast("No se pudo cargar el QR. Copia el enlace para compartirlo.")}}
